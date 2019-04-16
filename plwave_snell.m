@@ -4,8 +4,8 @@ circd = @(radius,deg_ang)  [radius*cosd(deg_ang);  radius*sind(deg_ang)];
 
 lambda = 500;
 n0 = 1.0;
-n1 = 1.0;
-theta = -90; % in degrees 
+n1 = 1.333;
+theta = -36; % in degrees 
 
 c = 3E+8; %c = 3E+8 m/s x 10+9 nm/m x 10-9 ns/s = 3E+8 nm/ns;
 k0 = 2*pi*n0/lambda;
@@ -27,15 +27,15 @@ arci = circd(500,linspace(90-theta,90,10));
 arcr = circd(500,linspace(-90-theta1,-90,10));  
 
 % Prepare the new file.
-folder = 'C:\Users\jripoll\OneDrive - Universidad Carlos III de Madrid\UC3M\Powerpoint\';
-vidObj = VideoWriter([folder 'plwave_inf.avi']);
-vidObj.FrameRate = 30;
-open(vidObj);
+% folder = 'C:\Users\jripoll\OneDrive - Universidad Carlos III de Madrid\UC3M\Powerpoint\';
+% vidObj = VideoWriter([folder 'plwave_inf.avi']);
+% vidObj.FrameRate = 30;
+% open(vidObj);
     
 t = 2*pi/w*(0:0.05:5);
 for it=1:length(t)
     E = exp(1i*(k0_x*X + k0_y*Y).*(Y>0) + 1i*(k1_x*X + k1_y*Y).*(Y<=0)).*exp(1i*w*t(it));
-    figure(1)
+    figure(4)
     hold off
     imagesc(x,y,real(E));
     xlabel('X (\mum)');
@@ -52,8 +52,8 @@ for it=1:length(t)
         h_ref = line([0 min(x)*sind(theta1)],[0 min(y)*cosd(theta1)],'color','w','LineWidth',0.2,'LineStyle','-');
     end
     pause(0.001);
-    f = getframe(gcf);
-    writeVideo(vidObj,f);
+%     f = getframe(gcf);
+%     writeVideo(vidObj,f);
 end
 % Close the file.
-close(vidObj);
+% close(vidObj);
